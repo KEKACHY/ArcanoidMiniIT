@@ -715,7 +715,8 @@ Transform:
   m_LocalPosition: {x: 0, y: -10, z: 0}
   m_LocalScale: {x: 4, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1610054908}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &828288625
@@ -741,9 +742,9 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 120
+  m_Constraints: 124
   m_CollisionDetection: 0
 --- !u!114 &828288626
 MonoBehaviour:
@@ -757,7 +758,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 993372b531bc14543a248124ae47de8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MiniIT.ARCAINOID.Player.PaddleController
-  _rigidbody: {fileID: 828288625}
+  rigidbodyComponent: {fileID: 828288625}
   speed: 36
   limitX: 18
 --- !u!1 &832575517
@@ -819,6 +820,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1013960350}
   - component: {fileID: 1013960349}
+  - component: {fileID: 1013960352}
   - component: {fileID: 1013960348}
   - component: {fileID: 1013960347}
   - component: {fileID: 1013960351}
@@ -836,7 +838,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013960346}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: dfc3166b8a6adad48bc8791f592bdb78, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -947,7 +949,22 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 120
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
+--- !u!114 &1013960352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013960346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91f2cb8a63513ac419cae22189ab0ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MINIIT.ARCAINOID.BALL.BallController
+  rigidbodyComponent: {fileID: 1013960351}
+  paddleLaunchPosition: {fileID: 1610054908}
+  speed: 10
 --- !u!1 &1023679613
 GameObject:
   m_ObjectHideFlags: 0
@@ -962,7 +979,7 @@ GameObject:
   - component: {fileID: 1023679614}
   m_Layer: 6
   m_Name: DownWall
-  m_TagString: Untagged
+  m_TagString: LoseZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -980,7 +997,7 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
@@ -1169,6 +1186,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2005696469}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1610054907
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1610054908}
+  m_Layer: 0
+  m_Name: LaunchPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1610054908
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1610054907}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 828288624}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2005696468
 GameObject:

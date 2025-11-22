@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace MiniIT.ARCAINOID.Player
+namespace MiniIT.GAMEPLAY
 {
     /// <summary>
     /// Горизонтальное управление Paddle игроком
@@ -9,22 +9,22 @@ namespace MiniIT.ARCAINOID.Player
     public class PaddleController : MonoBehaviour
     {
         [Header("Компоненты")]
-        [SerializeField] private Rigidbody _rigidbody = null;
+        [SerializeField] private Rigidbody rigidbodyComponent = null;
 
-        [Header("Настройки управления")]
+        [Header("Настройки")]
         [SerializeField] private float speed = 10f;
         [SerializeField] private float limitX = 7f;
 
-        private InputSystem _inputSystem = null;
+        private InputSystem inputSystem = null;
         private float moveInput = 0f;
 
         private void Awake()
         {
-            _inputSystem = new InputSystem();
-            _inputSystem.Player.Enable();
+            inputSystem = new InputSystem();
+            inputSystem.Player.Enable();
 
-            _inputSystem.Player.Move.performed += OnMove;
-            _inputSystem.Player.Move.canceled += OnMove;
+            inputSystem.Player.Move.performed += OnMove;
+            inputSystem.Player.Move.canceled += OnMove;
         }
 
         private void OnMove(InputAction.CallbackContext context)
@@ -35,20 +35,16 @@ namespace MiniIT.ARCAINOID.Player
 
         private void FixedUpdate()
         {
-            Vector3 velocity = new Vector3(moveInput * speed, 0f, 0f);
-            _rigidbody.MovePosition(_rigidbody.position + velocity * Time.fixedDeltaTime);
-
-            Vector3 pos = _rigidbody.position;
-            pos.x = Mathf.Clamp(pos.x, -limitX, limitX);
-            _rigidbody.position = pos;
+            float targetX = Mathf.Clamp(rigidbodyComponent.position.x + moveInput * speed * Time.fixedDeltaTime, -limitX, limitX);
+            rigidbodyComponent.MovePosition(new Vector3(targetX, rigidbodyComponent.position.y, rigidbodyComponent.position.z));
         }
 
         private void OnDestroy()
         {
-            _inputSystem.Player.Move.performed -= OnMove;
-            _inputSystem.Player.Move.canceled -= OnMove;
+            inputSystem.Player.Move.performed -= OnMove;
+            inputSystem.Player.Move.canceled -= OnMove;
 
-            _inputSystem.Dispose();
+            inputSystem.Dispose();
         }
     } 
 }
