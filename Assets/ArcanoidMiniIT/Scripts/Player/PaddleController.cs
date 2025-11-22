@@ -9,11 +9,14 @@ namespace MiniIT.GAMEPLAY
     public class PaddleController : MonoBehaviour
     {
         [Header("Компоненты")]
-        [SerializeField] private Rigidbody rigidbodyComponent = null;
+        [SerializeField] 
+        private Rigidbody rigidbodyComponent = null;
 
         [Header("Настройки")]
-        [SerializeField] private float speed = 10f;
-        [SerializeField] private float limitX = 7f;
+        [SerializeField] 
+        private float speed = 10f;
+        [SerializeField] 
+        private float limitX = 7f;
 
         private InputSystem inputSystem = null;
         private float moveInput = 0f;

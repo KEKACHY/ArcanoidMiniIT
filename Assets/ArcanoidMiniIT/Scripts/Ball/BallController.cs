@@ -28,7 +28,7 @@ namespace MiniIT.GAMEPLAY
             inputSystem.Player.Launch.performed += OnLaunch;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (rigidbodyComponent.linearVelocity.sqrMagnitude != speedBall * speedBall)
             {
