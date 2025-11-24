@@ -15,7 +15,11 @@ namespace MiniIT.GAMEPLAY
         private Transform paddleLaunchPosition = null;
 
         [Header("Настройки")]
-        [SerializeField] private float speedBall = 10f;
+        [SerializeField] 
+        private float speedBall = 10f;
+        [SerializeField]
+        private int damageAmount = 1;
+
 
         private InputSystem inputSystem = null;
         private bool launched = false;
@@ -30,6 +34,10 @@ namespace MiniIT.GAMEPLAY
 
         private void FixedUpdate()
         {
+            if(!launched)
+            {
+                transform.position = paddleLaunchPosition.position;
+            }
             if (rigidbodyComponent.linearVelocity.sqrMagnitude != speedBall * speedBall)
             {
                 rigidbodyComponent.linearVelocity = Vector3.ClampMagnitude(rigidbodyComponent.linearVelocity, speedBall);
@@ -46,6 +54,14 @@ namespace MiniIT.GAMEPLAY
                 Vector3 direction = new Vector3(randomX, randomY, 0f).normalized;
 
                 rigidbodyComponent.linearVelocity = direction * speedBall;
+            }
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            if(other.gameObject.TryGetComponent(out HealthHandler healthHandler))
+            {
+                healthHandler.TakeDamage(damageAmount);
             }
         }
 

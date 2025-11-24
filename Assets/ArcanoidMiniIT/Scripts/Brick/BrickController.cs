@@ -20,10 +20,5 @@ namespace MiniIT.GAMEPLAY
         {
             healthHandlerComponent.SetHealth(healthPoint);
         }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-            healthHandlerComponent.TakeDamage(1);
-        }
     }
 }
