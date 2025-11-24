@@ -60,6 +60,7 @@ namespace MiniIT.GAMEPLAY
 
             isLeftToRight = true;
             bool fillFull = false;
+            int brickCount = 0;
             while(!fillFull)
             {
                 int i = Random.Range(0, brickData.GetPrefabs().Length);
@@ -67,11 +68,13 @@ namespace MiniIT.GAMEPLAY
                 if(temp != null)
                 {
                     temp.gameObject.isStatic = true;
+                    brickCount++;
                     yield return new WaitForSeconds(spawnDelay);
                 }
                 else
                 {
                     fillFull = true;
+                    GameManager.Instance.SetTotalBricks(brickCount);
                 }
             }
         }

@@ -5,12 +5,12 @@ namespace MiniIT.GAMEPLAY
     /// <summary>
     /// Базовый класс кирпича
     /// </summary>
-    [RequireComponent(typeof(HealthHandler))]
+    [RequireComponent(typeof(HPBrickHandler))]
     public class BrickController : MonoBehaviour
     {
         [Header("Компоненты")]
         [SerializeField]
-        private HealthHandler healthHandlerComponent = null;
+        private HPBrickHandler healthHandlerComponent = null;
 
         [Header("Настройки")]
         [SerializeField]

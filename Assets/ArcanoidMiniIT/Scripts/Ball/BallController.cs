@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,8 +12,6 @@ namespace MiniIT.GAMEPLAY
         [Header("Компоненты")]
         [SerializeField] 
         private Rigidbody rigidbodyComponent = null;
-        [SerializeField] 
-        private Transform paddleLaunchPosition = null;
 
         [Header("Настройки")]
         [SerializeField] 
@@ -22,14 +21,21 @@ namespace MiniIT.GAMEPLAY
 
 
         private InputSystem inputSystem = null;
+        private Transform paddleLaunchPosition = null;
         private bool launched = false;
+        public static event Action OnBallDestroyed;
 
         private void Awake()
         {
             inputSystem = new InputSystem();
-            inputSystem.Player.Enable();
-            
             inputSystem.Player.Launch.performed += OnLaunch;
+        }
+
+        public void InitializeInput(Transform position)
+        {
+            inputSystem.Player.Enable();
+            paddleLaunchPosition = position;
+            launched = false;
         }
 
         private void FixedUpdate()
@@ -49,8 +55,8 @@ namespace MiniIT.GAMEPLAY
             if (!launched)
             {
                 launched = true;
-                float randomX = Random.Range(-0.75f, 0.75f);
-                float randomY = Random.Range(0.5f, 1f);
+                float randomX = UnityEngine.Random.Range(-0.75f, 0.75f);
+                float randomY = UnityEngine.Random.Range(0.5f, 1f);
                 Vector3 direction = new Vector3(randomX, randomY, 0f).normalized;
 
                 rigidbodyComponent.linearVelocity = direction * speedBall;
@@ -59,7 +65,7 @@ namespace MiniIT.GAMEPLAY
 
         private void OnCollisionEnter(Collision other)
         {
-            if(other.gameObject.TryGetComponent(out HealthHandler healthHandler))
+            if(other.gameObject.TryGetComponent(out HPBrickHandler healthHandler))
             {
                 healthHandler.TakeDamage(damageAmount);
             }
@@ -67,15 +73,15 @@ namespace MiniIT.GAMEPLAY
 
         private void OnTriggerEnter(Collider other)
         {
-            rigidbodyComponent.linearVelocity = Vector3.zero;
-            rigidbodyComponent.angularVelocity = Vector3.zero;
-            transform.position = paddleLaunchPosition.position;
-            launched = false;
+            OnBallDestroyed?.Invoke();
+            Destroy(gameObject);
         }
 
         private void OnDestroy()
         {
             inputSystem.Player.Launch.performed -= OnLaunch;
+            inputSystem.Player.Launch.canceled -= OnLaunch;
+            inputSystem.Dispose();
         }
     }
 }

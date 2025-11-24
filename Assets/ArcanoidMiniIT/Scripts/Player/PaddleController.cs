@@ -6,17 +6,25 @@ namespace MiniIT.GAMEPLAY
     /// <summary>
     /// Горизонтальное управление Paddle игроком
     /// </summary>
+    [RequireComponent(typeof(HPPlayerHandler))]
     public class PaddleController : MonoBehaviour
     {
         [Header("Компоненты")]
         [SerializeField] 
         private Rigidbody rigidbodyComponent = null;
 
+        [SerializeField]
+        private HPPlayerHandler healthHandlerComponent = null;
+
         [Header("Настройки")]
         [SerializeField] 
         private float speed = 10f;
+
         [SerializeField] 
         private float limitX = 7f;
+        
+        [SerializeField] 
+        private int healthPoint = 3;
 
         private InputSystem inputSystem = null;
         private float moveInput = 0f;
@@ -25,9 +33,13 @@ namespace MiniIT.GAMEPLAY
         {
             inputSystem = new InputSystem();
             inputSystem.Player.Enable();
-
             inputSystem.Player.Move.performed += OnMove;
             inputSystem.Player.Move.canceled += OnMove;
+        }
+
+        private void Start()
+        {
+            healthHandlerComponent.SetHealth(healthPoint);
         }
 
         private void OnMove(InputAction.CallbackContext context)

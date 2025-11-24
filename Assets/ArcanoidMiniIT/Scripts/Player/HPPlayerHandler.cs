@@ -6,29 +6,23 @@ namespace MiniIT.GAMEPLAY
     /// <summary>
     /// Компонент реализующий логику здоровья, получения урона и смерти
     /// </summary>
-    public class HealthHandler : MonoBehaviour
+    public class HPPlayerHandler : MonoBehaviour
     {
         private int currentHealth = 0;
-        public static event Action OnObjectDestroyed;
+        public static event Action<int> OnHealthChanged;
+        public int GetCurrentHealth() => currentHealth;
 
         public void SetHealth(int healthPoint)
         {
             currentHealth = healthPoint;
+            OnHealthChanged?.Invoke(currentHealth);
         }
 
         public void TakeDamage(int damageAmount)
         {
             currentHealth -= damageAmount;
-            if (currentHealth <= 0)
-            {
-                HandleDestruction();
-            }
+            OnHealthChanged?.Invoke(currentHealth);
         }
 
-        private void HandleDestruction()
-        {
-            OnObjectDestroyed?.Invoke();
-            Destroy(gameObject);
-        }
     }
 }
