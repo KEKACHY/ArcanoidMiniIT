@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6637087582186299809}
   - component: {fileID: 5569344854851564767}
   - component: {fileID: 5212558415658551553}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HardBrick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
